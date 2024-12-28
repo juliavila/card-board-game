@@ -1,0 +1,45 @@
+$card-area: 200px;
+$board-height: calc(100vh - 50px - $card-area);
+
+
+.board {
+  height: initial;
+  width: 100%;
+  max-width: 100%;
+
+  aspect-ratio: 7 / 5;
+
+  margin: auto;
+
+  background: seagreen;
+
+
+  display: grid;
+  direction: rtl;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+
+  .cardSlot {
+    border: 1px solid rgba(white, .3);
+    background: none;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(white, .1);
+    }
+
+    &:disabled {
+      cursor: initial;
+    }
+  }
+}
+
+@media (min-aspect-ratio: 1/1) {
+
+  .board {
+
+    height: $board-height;
+    width: initial;
+    max-width: initial;
+
+  }
+}

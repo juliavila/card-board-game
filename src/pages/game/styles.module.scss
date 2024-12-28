@@ -1,0 +1,25 @@
+.game {
+  height: initial;
+  width: 100%;
+  max-width: 100%;
+
+  margin: auto;
+  // background-color: blue;
+  aspect-ratio: 8/5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-aspect-ratio: 8/5) {
+
+  
+.game { 
+
+  height: 100vh;
+  width: initial;
+  max-width: initial;
+ }
+}
