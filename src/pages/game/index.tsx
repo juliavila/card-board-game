@@ -6,9 +6,13 @@ import styles from './styles.module.scss'
 import { Card, CardOnBoard, Player, Slot } from '../../models/game.models'
 import mocks from '../../mocks'
 import PlayersComponent from '../../components/player'
+import { playerManager } from '../../components/player/manager'
 
-const mapToInvertTurn = (players: Player[]) => 
-  players.map(player => ({ ...player, playing: !player.playing }))
+const updateHand = (current: Player[], index: number, newHand: Card[]) => {
+  const newPlayers = [...current]
+  newPlayers[index] = { ...newPlayers[index], hand: newHand }
+  return newPlayers;
+}
 
 function Game() {
 
@@ -21,8 +25,15 @@ function Game() {
 
   const primaryPlayer = players.find(({ playing }) => playing) as Player
   const secondaryPlayer = players.find(({ playing }) => !playing) as Player
+  const index = players.findIndex(player => player.name === primaryPlayer.name);
 
-  const endTurn = () => setPlayers(mapToInvertTurn);
+  const endTurn = () => {
+    setPlayers(current =>
+      (updateHand(current, index, hand))
+        .map(playerManager.invertTurn)
+        .map(playerManager.resetHand)
+    )
+  };
 
   const selectSlot = (slot: Slot) => {
     if (!selectedCard) return;
@@ -38,8 +49,12 @@ function Game() {
   }
 
   useEffect(() => {
-    setHand(primaryPlayer.deck.slice(1, 5))
+    setHand(primaryPlayer.hand)
   }, [primaryPlayer])
+
+  useEffect(() => {
+    setPlayers(current => current.map(playerManager.resetHand));
+  }, [])
 
   return (
     <div className={styles.game}>

@@ -41,5 +41,8 @@ export type Player = {
   live: number;
   playing: boolean;
   energy: number;
-  deck: Card[]
+  deck: Card[];
+  handSize: number;
+  hand: Card[];
+  discard: Card[];
 }
